@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Programa Impulsar</h1>
+{% if current_user.is_authenticated %}
+    <h6>Bienvenido, {{ current_user.username }}!</h6>
+{% else %}
+    <p>Página de inicio</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Resultados de KPIs para {{ user.username }}</h1> 
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Reducción Consumo Eléctrico</th>
+            <th>Gestión Ambiental</th>
+            <th>Reducción Consumo Agua</th>
+            <th>Reducción Residuos</th>
+            <th>Análisis Impactos Ambientales</th>
+            <th>Cumplimiento Aspectos Laborales</th>
+            <th>Gestión Diversidad e Inclusión</th>
+            <th>Acciones Sociales</th>
+            <th>Gestión Salud y Seguridad</th>
+            <th>Gestión Formación</th>
+            <th>Código de Conducta</th>
+            <th>Canal de Denuncias</th>
+            <th>Área de Compliance</th>
+            <th>Debida Diligencia</th>
+            <th>Evaluación de Riesgos</th>
+            <th>Huella de CO2</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for kpi in kpis %}
+        <tr>
+            <td>{{ kpi.date }}</td>
+            <td>{{ descriptions[1][kpi.reduc_consumo_electrico] }}</td>
+            <td>{{ descriptions[2][kpi.gestion_ambiental] }}</td>
+            <td>{{ descriptions[3][kpi.reduc_consumo_agua] }}</td>
+            <td>{{ descriptions[4][kpi.reduc_residuos] }}</td>
+            <td>{{ descriptions[5][kpi.impacto_ambiental] }}</td>
+            <td>{{ descriptions[6][kpi.asp_laborales] }}</td>
+            <td>{{ descriptions[7][kpi.div_inc_ddhh] }}</td>
+            <td>{{ descriptions[8][kpi.acc_social] }}</td>
+            <td>{{ descriptions[9][kpi.ssma] }}</td>
+            <td>{{ descriptions[10][kpi.formacion] }}</td>
+            <td>{{ descriptions[11][kpi.codigo_conducta] }}</td>
+            <td>{{ descriptions[12][kpi.linea_etica] }}</td>
+            <td>{{ descriptions[13][kpi.area_compliance] }}</td>
+            <td>{{ descriptions[14][kpi.due_dilligence] }}</td>
+            <td>{{ descriptions[15][kpi.riesgos] }}</td>
+            <td>{{ descriptions[16][kpi.huella_co2] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('evaluate', cuit=user.cuit) }}" class="btn btn-primary">Realizar Auto-evaluación</a>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Resultados de KPIs para {{ user.username }}</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Reducción Consumo Eléctrico</th>
+            <th>Gestión Ambiental</th>
+            <th>Reducción Consumo Agua</th>
+            <th>Reducción Residuos</th>
+            <th>Análisis Impactos Ambientales</th>
+            <th>Cumplimiento Aspectos Laborales</th>
+            <th>Gestión Diversidad e Inclusión</th>
+            <th>Acciones Sociales</th>
+            <th>Gestión Salud y Seguridad</th>
+            <th>Gestión Formación</th>
+            <th>Código de Conducta</th>
+            <th>Canal de Denuncias</th>
+            <th>Área de Compliance</th>
+            <th>Debida Diligencia</th>
+            <th>Evaluación de Riesgos</th>
+            <th>Huella de CO2</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for kpi in kpis %}
+        <tr>
+            <td>{{ kpi.date }}</td>
+            <td>{{ descriptions[kpi.reduc_consumo_electrico] }}</td>
+            <td>{{ descriptions[kpi.gestion_ambiental] }}</td>
+            <td>{{ descriptions[kpi.reduc_consumo_agua] }}</td>
+            <td>{{ descriptions[kpi.reduc_residuos] }}</td>
+            <td>{{ descriptions[kpi.impacto_ambiental] }}</td>
+            <td>{{ descriptions[kpi.asp_laborales] }}</td>
+            <td>{{ descriptions[kpi.div_inc_ddhh] }}</td>
+            <td>{{ descriptions[kpi.acc_social] }}</td>
+            <td>{{ descriptions[kpi.ssma] }}</td>
+            <td>{{ descriptions[kpi.formacion] }}</td>
+            <td>{{ descriptions[kpi.codigo_conducta] }}</td>
+            <td>{{ descriptions[kpi.linea_etica] }}</td>
+            <td>{{ descriptions[kpi.area_compliance] }}</td>
+            <td>{{ descriptions[kpi.due_dilligence] }}</td>
+            <td>{{ descriptions[kpi.riesgos] }}</td>
+            <td>{{ descriptions[kpi.huella_co2] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
