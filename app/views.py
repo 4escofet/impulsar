@@ -10,6 +10,11 @@ def home():
     app.logger.debug("Home route accessed")
     return render_template('index.html')
 
+@app.route('/recursos')
+def recursos():
+    app.logger.debug("Recursos route accessed")
+    return render_template('recursos.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     app.logger.debug("Login route accessed")

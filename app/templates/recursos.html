@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+<div class="container" style="margin-top: 20px;">
+
+    {% block content %}
+    <br>
+    <h1 class="row text-center">Recursos asincrónicos</h1>
+    <hr class="hr-center">
+    <br>
+    <p class="text-center" style="margin-bottom:30px">
+        Estas 4 guías te permitirán conocer un poco más sobre las distintas temáticas para mejorar la estrategia de sostenibilidad de tu organización.
+    </p>
+    <div class="row">
+        <div class="col-xs-6 col-lg-3" style="margin-bottom: 20px;">
+            <a href="{{ url_for('static', filename='files/LN_Guia-Sostenibilidad.pdf') }}" target="_blank">
+                <img src="{{ url_for('static', filename='images/LN_Guia-Sostenibilidad_Portada.jpg') }}" width="100%">
+            </a>
+        </div>
+        <div class="col-xs-6 col-lg-3" style="margin-bottom: 20px;">
+            <a href="{{ url_for('static', filename='files/LN_Guia-Eje-Ambiental.pdf') }}" target="_blank">
+                <img src="{{ url_for('static', filename='images/LN-Guia-Eje-Ambiental_Portada.jpg') }}" width="100%">
+            </a>
+        </div>
+        <div class="col-xs-6 col-lg-3" style="margin-bottom: 20px;">
+            <a href="{{ url_for('static', filename='files/LN_Guia-Eje-Compliance.pdf') }}" target="_blank">
+                <img src="{{ url_for('static', filename='images/LN-Guia-Eje-Compliance_Portada.jpg') }}" width="100%">
+            </a>
+        </div>
+        <div class="col-xs-6 col-lg-3" style="margin-bottom: 20px;">
+            <a href="{{ url_for('static', filename='files/LN-Guia-Comunidad_y_Colaboradores.pdf') }}" target="_blank">
+                <img src="{{ url_for('static', filename='images/LN-Guia-Comunidad_y_Colaboradores_Portada.jpg') }}" width="100%">
+            </a>
+        </div>
+    </div>
+    {% endblock %}
+
+</div>
