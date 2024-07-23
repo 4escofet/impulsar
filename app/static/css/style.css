@@ -1,0 +1,76 @@
+body {
+    padding-top: 70px; /* Ajusta este valor según la altura de tu barra de navegación */
+    padding-bottom:0px;
+}
+
+.video-container {
+    margin-top: 20px; /* Ajusta este valor según el margen que desees */
+    display: flex;
+    justify-content: center;
+}
+
+/* Efecto hover para las imágenes */
+img.guide-img {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+img.guide-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+iframe {
+    display: block;
+    margin: 0 auto;
+}
+
+footer p {
+    color: whitesmoke;
+}
+
+.carousel-item {
+    height: 400px; /* Puedes ajustar esta altura según lo necesites */
+}
+
+.carousel-item > .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para mejorar la legibilidad */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.carousel-item {
+    height: 600px; /* Ajusta la altura según sea necesario */
+}
+
+.carousel-item img {
+    object-fit: cover;
+    height: 80%;
+    width: 80%;
+}
+
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 768px) {
+    img.guide-img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* Ajustes para pantallas de PC */
+@media (min-width: 769px) {
+    iframe {
+        width: 50%;
+        height: 400px;
+        display: block;
+        margin: 0 auto;
+    }
+}
+
