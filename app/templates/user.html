@@ -1,51 +1,204 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Resultados de KPIs para {{ user.username }}</h1> 
+
+<h1>Resultados de KPIs para {{ user.username }}</h1>
+
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Fecha</th>
-            <th>Reducción Consumo Eléctrico</th>
-            <th>Gestión Ambiental</th>
-            <th>Reducción Consumo Agua</th>
-            <th>Reducción Residuos</th>
-            <th>Análisis Impactos Ambientales</th>
-            <th>Cumplimiento Aspectos Laborales</th>
-            <th>Gestión Diversidad e Inclusión</th>
-            <th>Acciones Sociales</th>
-            <th>Gestión Salud y Seguridad</th>
-            <th>Gestión Formación</th>
-            <th>Código de Conducta</th>
-            <th>Canal de Denuncias</th>
-            <th>Área de Compliance</th>
-            <th>Debida Diligencia</th>
-            <th>Evaluación de Riesgos</th>
-            <th>Huella de CO2</th>
+            <th>Pregunta</th>
+            <th>Puntaje</th>
+            <th>Descripción</th>
+            <th>Semáforo</th>
         </tr>
     </thead>
     <tbody>
         {% for kpi in kpis %}
         <tr>
-            <td>{{ kpi.date }}</td>
+            <td>Reducción Consumo Eléctrico</td>
+            <td>{{ kpi.reduc_consumo_electrico }}</td>
             <td>{{ descriptions[1][kpi.reduc_consumo_electrico] }}</td>
+            <td><span class="semaforo" style="background-color: {{ 'darkgreen' if kpi.reduc_consumo_electrico == 4 else 'lightgreen' if kpi.reduc_consumo_electrico == 3 else 'yellow' if kpi.reduc_consumo_electrico == 2 else 'red' }};"></span></td>
+        </tr>
+        <tr>
+            <td>Gestión Ambiental</td>
+            <td>{{ kpi.gestion_ambiental }}</td>
             <td>{{ descriptions[2][kpi.gestion_ambiental] }}</td>
+            <td><span class="semaforo" style="background-color: {{ 'darkgreen' if kpi.gestion_ambiental == 4 else 'lightgreen' if kpi.gestion_ambiental == 3 else 'yellow' if kpi.gestion_ambiental == 2 else 'red' }};"></span></td>
+        </tr>
+        <tr>
+            <td>Reducción Consumo Agua</td>
+            <td>{{ kpi.reduc_consumo_agua }}</td>
             <td>{{ descriptions[3][kpi.reduc_consumo_agua] }}</td>
+            <td><span class="semaforo" style="background-color: {{ 'darkgreen' if kpi.reduc_consumo_agua == 4 else 'lightgreen' if kpi.reduc_consumo_agua == 3 else 'yellow' if kpi.reduc_consumo_agua == 2 else 'red' }};"></span></td>
+        </tr>
+        <tr>
+            <td>Reducción Residuos</td>
+            <td>{{ kpi.reduc_residuos }}</td>
             <td>{{ descriptions[4][kpi.reduc_residuos] }}</td>
+            <td><span class="semaforo" style="background-color: {{ 'darkgreen' if kpi.reduc_residuos == 4 else 'lightgreen' if kpi.reduc_residuos == 3 else 'yellow' if kpi.reduc_residuos == 2 else 'red' }};"></span></td>
+        </tr>
+        <tr>
+            <td>Análisis Impactos Ambientales</td>
+            <td>{{ kpi.impacto_ambiental }}</td>
             <td>{{ descriptions[5][kpi.impacto_ambiental] }}</td>
+            <td><span class="semaforo" style="background-color: {{ 'darkgreen' if kpi.impacto_ambiental == 4 else 'lightgreen' if kpi.impacto_ambiental == 3 else 'yellow' if kpi.impacto_ambiental == 2 else 'red' }};"></span></td>
+        </tr>
+        <tr>
+            <td>Cumplimiento Aspectos Laborales</td>
+            <td>{{ kpi.asp_laborales }}</td>
             <td>{{ descriptions[6][kpi.asp_laborales] }}</td>
+            <td><span class="semaforo" style="background-color: {{ 'darkgreen' if kpi.asp_laborales == 4 else 'lightgreen' if kpi.asp_laborales == 3 else 'yellow' if kpi.asp_laborales == 2 else 'red' }};"></span></td>
+        </tr>
+        <tr>
+            <td>Gestión Diversidad e Inclusión</td>
+            <td>{{ kpi.div_inc_ddhh }}</td>
             <td>{{ descriptions[7][kpi.div_inc_ddhh] }}</td>
+            <td><span class="semaforo" style="background-color: {{ 'darkgreen' if kpi.div_inc_ddhh == 4 else 'lightgreen' if kpi.div_inc_ddhh == 3 else 'yellow' if kpi.div_inc_ddhh == 2 else 'red' }};"></span></td>
+        </tr>
+        <tr>
+            <td>Acciones Sociales</td>
+            <td>{{ kpi.acc_social }}</td>
             <td>{{ descriptions[8][kpi.acc_social] }}</td>
+            <td><span class="semaforo" style="background-color: {{ 'darkgreen' if kpi.acc_social == 4 else 'lightgreen' if kpi.acc_social == 3 else 'yellow' if kpi.acc_social == 2 else 'red' }};"></span></td>
+        </tr>
+        <tr>
+            <td>Gestión Salud y Seguridad</td>
+            <td>{{ kpi.ssma }}</td>
             <td>{{ descriptions[9][kpi.ssma] }}</td>
+            <td><span class="semaforo" style="background-color: {{ 'darkgreen' if kpi.ssma == 4 else 'lightgreen' if kpi.ssma == 3 else 'yellow' if kpi.ssma == 2 else 'red' }};"></span></td>
+        </tr>
+        <tr>
+            <td>Gestión Formación</td>
+            <td>{{ kpi.formacion }}</td>
             <td>{{ descriptions[10][kpi.formacion] }}</td>
+            <td><span class="semaforo" style="background-color: {{ 'darkgreen' if kpi.formacion == 4 else 'lightgreen' if kpi.formacion == 3 else 'yellow' if kpi.formacion == 2 else 'red' }};"></span></td>
+        </tr>
+        <tr>
+            <td>Código de Conducta</td>
+            <td>{{ kpi.codigo_conducta }}</td>
             <td>{{ descriptions[11][kpi.codigo_conducta] }}</td>
+            <td><span class="semaforo" style="background-color: {{ 'darkgreen' if kpi.codigo_conducta == 4 else 'lightgreen' if kpi.codigo_conducta == 3 else 'yellow' if kpi.codigo_conducta == 2 else 'red' }};"></span></td>
+        </tr>
+        <tr>
+            <td>Canal de Denuncias</td>
+            <td>{{ kpi.linea_etica }}</td>
             <td>{{ descriptions[12][kpi.linea_etica] }}</td>
+            <td><span class="semaforo" style="background-color: {{ 'darkgreen' if kpi.linea_etica == 4 else 'lightgreen' if kpi.linea_etica == 3 else 'yellow' if kpi.linea_etica == 2 else 'red' }};"></span></td>
+        </tr>
+        <tr>
+            <td>Área de Compliance</td>
+            <td>{{ kpi.area_compliance }}</td>
             <td>{{ descriptions[13][kpi.area_compliance] }}</td>
+            <td><span class="semaforo" style="background-color: {{ 'darkgreen' if kpi.area_compliance == 4 else 'lightgreen' if kpi.area_compliance == 3 else 'yellow' if kpi.area_compliance == 2 else 'red' }};"></span></td>
+        </tr>
+        <tr>
+            <td>Debida Diligencia</td>
+            <td>{{ kpi.due_dilligence }}</td>
             <td>{{ descriptions[14][kpi.due_dilligence] }}</td>
+            <td><span class="semaforo" style="background-color: {{ 'darkgreen' if kpi.due_dilligence == 4 else 'lightgreen' if kpi.due_dilligence == 3 else 'yellow' if kpi.due_dilligence == 2 else 'red' }};"></span></td>
+        </tr>
+        <tr>
+            <td>Evaluación de Riesgos</td>
+            <td>{{ kpi.riesgos }}</td>
             <td>{{ descriptions[15][kpi.riesgos] }}</td>
+            <td><span class="semaforo" style="background-color: {{ 'darkgreen' if kpi.riesgos == 4 else 'lightgreen' if kpi.riesgos == 3 else 'yellow' if kpi.riesgos == 2 else 'red' }};"></span></td>
+        </tr>
+        <tr>
+            <td>Huella de CO2</td>
+            <td>{{ kpi.huella_co2 }}</td>
             <td>{{ descriptions[16][kpi.huella_co2] }}</td>
+            <td><span class="semaforo" style="background-color: {{ 'darkgreen' if kpi.huella_co2 == 4 else 'lightgreen' if kpi.huella_co2 == 3 else 'yellow' if kpi.huella_co2 == 2 else 'red' }};"></span></td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-<a href="{{ url_for('evaluate', cuit=user.cuit) }}" class="btn btn-primary">Realizar Auto-evaluación</a>
+
+<style>
+    .semaforo {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+    }
+</style>
+
+<h2>Gráfico de Resultados</h2>
+<canvas id="kpiChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('kpiChart').getContext('2d');
+
+    function getColor(score) {
+        if (score == 4) return 'darkgreen';
+        if (score == 3) return 'lightgreen';
+        if (score == 2) return 'yellow';
+        if (score == 1) return 'red';
+        return 'grey'; // default color if score is invalid
+    }
+
+    var kpiChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Reducción Consumo Eléctrico', 'Gestión Ambiental', 'Reducción Consumo Agua', 'Reducción Residuos', 'Análisis Impactos Ambientales', 'Cumplimiento Aspectos Laborales', 'Gestión Diversidad e Inclusión', 'Acciones Sociales', 'Gestión Salud y Seguridad', 'Gestión Formación', 'Código de Conducta', 'Canal de Denuncias', 'Área de Compliance', 'Debida Diligencia', 'Evaluación de Riesgos', 'Huella de CO2'],
+            datasets: [
+                {% for kpi in kpis %}
+                {
+                    label: '{{ kpi.date.strftime('%Y-%m-%d') }}',
+                    data: [
+                        {{ kpi.reduc_consumo_electrico }},
+                        {{ kpi.gestion_ambiental }},
+                        {{ kpi.reduc_consumo_agua }},
+                        {{ kpi.reduc_residuos }},
+                        {{ kpi.impacto_ambiental }},
+                        {{ kpi.asp_laborales }},
+                        {{ kpi.div_inc_ddhh }},
+                        {{ kpi.acc_social }},
+                        {{ kpi.ssma }},
+                        {{ kpi.formacion }},
+                        {{ kpi.codigo_conducta }},
+                        {{ kpi.linea_etica }},
+                        {{ kpi.area_compliance }},
+                        {{ kpi.due_dilligence }},
+                        {{ kpi.riesgos }},
+                        {{ kpi.huella_co2 }}
+                    ],
+                    backgroundColor: [
+                        getColor({{ kpi.reduc_consumo_electrico }}),
+                        getColor({{ kpi.gestion_ambiental }}),
+                        getColor({{ kpi.reduc_consumo_agua }}),
+                        getColor({{ kpi.reduc_residuos }}),
+                        getColor({{ kpi.impacto_ambiental }}),
+                        getColor({{ kpi.asp_laborales }}),
+                        getColor({{ kpi.div_inc_ddhh }}),
+                        getColor({{ kpi.acc_social }}),
+                        getColor({{ kpi.ssma }}),
+                        getColor({{ kpi.formacion }}),
+                        getColor({{ kpi.codigo_conducta }}),
+                        getColor({{ kpi.linea_etica }}),
+                        getColor({{ kpi.area_compliance }}),
+                        getColor({{ kpi.due_dilligence }}),
+                        getColor({{ kpi.riesgos }}),
+                        getColor({{ kpi.huella_co2 }})
+                    ]
+                },
+                {% endfor %}
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+
 {% endblock %}

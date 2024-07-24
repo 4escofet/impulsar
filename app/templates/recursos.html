@@ -33,14 +33,23 @@
     </div>
 </div>
 
-<div class="container">
-    <h2 class="text-center">3 datos sobre nuestro Programa Impulsar</h2>
-    <hr class="hr-center">
-     <br>
-    <div class="video-container">
-          <iframe width="100%" height="400" src="https://www.youtube.com/embed/2h3Z4lL2KR4?si=z25FUCx4UTEtyw-R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
-     </div>
-</div>
+    <div class="container">
+        <h2 class="text-center">3 datos sobre nuestro Programa Impulsar</h2>
+        <hr class="hr-center">
+        <br>
+        <div class="video-container">
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/2h3Z4lL2KR4?si=z25FUCx4UTEtyw-R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+        </div>
+    </div>
+
+    <div class="container" id="olavarria-video">
+        <h3 class="text-center">Reviví los mejores momentos del taller en Olavarría</h3>
+        <hr class="hr-center">
+        <br>
+        <div class="video-container">
+            <iframe width="100%" height="400" src="{{ url_for('static', filename='images/FinalOlavarría.mp4') }}" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+        </div>
+    </div>
     {% endblock %}
 
 </div>

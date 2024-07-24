@@ -2,50 +2,87 @@
 {% block content %}
 
 <h1>Resultados de KPIs para {{ user.username }}</h1>
+
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Fecha</th>
-            <th>Reducción Consumo Eléctrico</th>
-            <th>Gestión Ambiental</th>
-            <th>Reducción Consumo Agua</th>
-            <th>Reducción Residuos</th>
-            <th>Análisis Impactos Ambientales</th>
-            <th>Cumplimiento Aspectos Laborales</th>
-            <th>Gestión Diversidad e Inclusión</th>
-            <th>Acciones Sociales</th>
-            <th>Gestión Salud y Seguridad</th>
-            <th>Gestión Formación</th>
-            <th>Código de Conducta</th>
-            <th>Canal de Denuncias</th>
-            <th>Área de Compliance</th>
-            <th>Debida Diligencia</th>
-            <th>Evaluación de Riesgos</th>
-            <th>Huella de CO2</th>
+            <th>Pregunta</th>
+            {% for kpi in kpis %}
+                <th>{{ kpi.date.strftime('%Y-%m-%d') }}</th>
+            {% endfor %}
         </tr>
     </thead>
     <tbody>
-        {% for kpi in kpis %}
         <tr>
-            <td>{{ kpi.date }}</td>
-            <td>{{ descriptions[kpi.reduc_consumo_electrico] }}</td>
-            <td>{{ descriptions[kpi.gestion_ambiental] }}</td>
-            <td>{{ descriptions[kpi.reduc_consumo_agua] }}</td>
-            <td>{{ descriptions[kpi.reduc_residuos] }}</td>
-            <td>{{ descriptions[kpi.impacto_ambiental] }}</td>
-            <td>{{ descriptions[kpi.asp_laborales] }}</td>
-            <td>{{ descriptions[kpi.div_inc_ddhh] }}</td>
-            <td>{{ descriptions[kpi.acc_social] }}</td>
-            <td>{{ descriptions[kpi.ssma] }}</td>
-            <td>{{ descriptions[kpi.formacion] }}</td>
-            <td>{{ descriptions[kpi.codigo_conducta] }}</td>
-            <td>{{ descriptions[kpi.linea_etica] }}</td>
-            <td>{{ descriptions[kpi.area_compliance] }}</td>
-            <td>{{ descriptions[kpi.due_dilligence] }}</td>
-            <td>{{ descriptions[kpi.riesgos] }}</td>
-            <td>{{ descriptions[kpi.huella_co2] }}</td>
+            <td>Reducción Consumo Eléctrico</td>
+            {% for kpi in kpis %}
+                <td>{{ kpi.reduc_consumo_electrico }} ({{ descriptions[1][kpi.reduc_consumo_electrico] }})</td>
+            {% endfor %}
         </tr>
-        {% endfor %}
+        <tr>
+            <td>Gestión Ambiental</td>
+            {% for kpi in kpis %}
+                <td>{{ kpi.gestion_ambiental }} ({{ descriptions[2][kpi.gestion_ambiental] }})</td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td>Reducción Consumo Agua</td>
+            {% for kpi in kpis %}
+                <td>{{ kpi.reduc_consumo_agua }} ({{ descriptions[3][kpi.reduc_consumo_agua] }})</td>
+            {% endfor %}
+        </tr>
+        <!-- Repetir para todas las demás preguntas -->
     </tbody>
 </table>
+
+<h2>Gráfico de Resultados</h2>
+<canvas id="kpiChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('kpiChart').getContext('2d');
+    var kpiChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Reducción Consumo Eléctrico', 'Gestión Ambiental', 'Reducción Consumo Agua', 'Reducción Residuos', 'Análisis Impactos Ambientales', 'Cumplimiento Aspectos Laborales', 'Gestión Diversidad e Inclusión', 'Acciones Sociales', 'Gestión Salud y Seguridad', 'Gestión Formación', 'Código de Conducta', 'Canal de Denuncias', 'Área de Compliance', 'Debida Diligencia', 'Evaluación de Riesgos', 'Huella de CO2'],
+            datasets: [
+                {% for kpi in kpis %}
+                {
+                    label: '{{ kpi.date.strftime('%Y-%m-%d') }}',
+                    data: [
+                        {{ kpi.reduc_consumo_electrico }},
+                        {{ kpi.gestion_ambiental }},
+                        {{ kpi.reduc_consumo_agua }},
+                        {{ kpi.reduc_residuos }},
+                        {{ kpi.impacto_ambiental }},
+                        {{ kpi.asp_laborales }},
+                        {{ kpi.div_inc_ddhh }},
+                        {{ kpi.acc_social }},
+                        {{ kpi.ssma }},
+                        {{ kpi.formacion }},
+                        {{ kpi.codigo_conducta }},
+                        {{ kpi.linea_etica }},
+                        {{ kpi.area_compliance }},
+                        {{ kpi.due_dilligence }},
+                        {{ kpi.riesgos }},
+                        {{ kpi.huella_co2 }}
+                    ]
+                },
+                {% endfor %}
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
 {% endblock %}

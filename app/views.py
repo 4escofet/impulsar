@@ -64,13 +64,14 @@ def register():
 @login_required
 def user(cuit):
     user = User.query.get_or_404(cuit)
-    kpis = KPI.query.filter_by(cuit=user.cuit).all()  # Ajuste aquí
+    kpis = KPI.query.filter_by(cuit=user.cuit).all()
 
     descriptions = {desc.question_number: {} for desc in KPIDescription.query.all()}
     for desc in KPIDescription.query.all():
         descriptions[desc.question_number][desc.value] = desc.description
 
     return render_template('user.html', user=user, kpis=kpis, descriptions=descriptions)
+
 
 
 @app.route('/user/<cuit>/evaluate', methods=['GET', 'POST'])
