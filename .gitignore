@@ -1,0 +1,73 @@
+# Ignore node_modules
+node_modules/
+
+# Ignore log files and directories
+*.log
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore environment variable files
+.env
+.env.local
+.env.*.local
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE-specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Ignore compiled Python files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ignore macOS-specific files
+*.DS_Store
+
+# Ignore Windows-specific files
+*.lnk
+
+# Ignore build files
+build/
+dist/
+
+# Ignore dependency directories
+bower_components/
+vendor/
+
+# Ignore compiled binary files
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Ignore archives
+*.zip
+*.tar.gz
+*.rar
+
+# Ignore media files
+*.mp4
+*.mov
+*.avi
+*.mkv
+
+# Ignore personal settings
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# Ignore temporary files
+*.tmp
+*.temp
+
+# Ignore coverage reports
+coverage/
+*.lcov
