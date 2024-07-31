@@ -3,6 +3,7 @@
 
 <h1>Resultados de KPIs para {{ user.username }}</h1>
 
+{% if kpis %}
 <table class="table table-striped">
     <thead>
         <tr>
@@ -84,5 +85,12 @@
         }
     });
 </script>
+
+<a href="{{ url_for('evaluate', cuit=user.cuit) }}" class="btn btn-primary">Cargar nueva auto-evaluación</a>
+
+{% else %}
+<p>No tienes KPIs cargados aún.</p>
+<a href="{{ url_for('evaluate', cuit=user.cuit) }}" class="btn btn-primary">Cargar tus primeros KPIs</a>
+{% endif %}
 
 {% endblock %}
