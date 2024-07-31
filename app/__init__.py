@@ -2,6 +2,16 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from dotenv import load_dotenv
+import os
+
+# Cargar las variables de entorno desde el archivo .env
+load_dotenv()
+
+class Config:
+    SECRET_KEY = os.getenv('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -9,10 +19,9 @@ login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
-def create_app():
+def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'your_secret_key'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+    app.config.from_object(config_class)
     
     db.init_app(app)
     bcrypt.init_app(app)

@@ -5,51 +5,53 @@
     {% block content %}
     
     <h1 class="row text-center">Recursos asincrónicos</h1>
-<hr class="hr-center">
-<br>
-<p class="text-center" style="margin-bottom:30px">
-    Estas 4 guías te permitirán conocer un poco más sobre las distintas temáticas para mejorar la estrategia de sostenibilidad de tu organización.
-</p>
-<div class="row">
-    <div class="col-xs-6 col-lg-3" style="margin-bottom: 20px;">
-        <a href="{{ url_for('static', filename='files/LN_Guia-Sostenibilidad.pdf') }}" target="_blank">
-            <img src="{{ url_for('static', filename='images/LN_Guia-Sostenibilidad_Portada.jpg') }}" width="100%" class="guide-img">
-        </a>
+    <hr class="hr-center">
+    <br>
+    <p class="text-center" style="margin-bottom:30px">
+        Estas 4 guías te permitirán conocer un poco más sobre las distintas temáticas para mejorar la estrategia de sostenibilidad de tu organización.
+    </p>
+    <div class="row">
+        <div class="col-xs-6 col-lg-3" style="margin-bottom: 20px;">
+            <a href="{{ url_for('static', filename='files/LN_Guia-Sostenibilidad.pdf') }}" target="_blank">
+                <img src="{{ url_for('static', filename='images/LN_Guia-Sostenibilidad_Portada.jpg') }}" width="100%" class="guide-img">
+            </a>
+        </div>
+        <div class="col-xs-6 col-lg-3" style="margin-bottom: 20px;">
+            <a href="{{ url_for('static', filename='files/LN_Guia-Eje-Ambiental.pdf') }}" target="_blank">
+                <img src="{{ url_for('static', filename='images/LN-Guia-Eje-Ambiental_Portada.jpg') }}" width="100%" class="guide-img">
+            </a>
+        </div>
+        <div class="col-xs-6 col-lg-3" style="margin-bottom: 20px;">
+            <a href="{{ url_for('static', filename='files/LN_Guia-Eje-Compliance.pdf') }}" target="_blank">
+                <img src="{{ url_for('static', filename='images/LN-Guia-Eje-Compliance_Portada.jpg') }}" width="100%" class="guide-img">
+            </a>
+        </div>
+        <div class="col-xs-6 col-lg-3" style="margin-bottom: 20px;">
+            <a href="{{ url_for('static', filename='files/LN-Guia-Comunidad_y_Colaboradores.pdf') }}" target="_blank">
+                <img src="{{ url_for('static', filename='images/LN-Guia-Comunidad_y_Colaboradores_Portada.jpg') }}" width="100%" class="guide-img">
+            </a>
+        </div>
     </div>
-    <div class="col-xs-6 col-lg-3" style="margin-bottom: 20px;">
-        <a href="{{ url_for('static', filename='files/LN_Guia-Eje-Ambiental.pdf') }}" target="_blank">
-            <img src="{{ url_for('static', filename='images/LN-Guia-Eje-Ambiental_Portada.jpg') }}" width="100%" class="guide-img">
-        </a>
-    </div>
-    <div class="col-xs-6 col-lg-3" style="margin-bottom: 20px;">
-        <a href="{{ url_for('static', filename='files/LN_Guia-Eje-Compliance.pdf') }}" target="_blank">
-            <img src="{{ url_for('static', filename='images/LN-Guia-Eje-Compliance_Portada.jpg') }}" width="100%" class="guide-img">
-        </a>
-    </div>
-    <div class="col-xs-6 col-lg-3" style="margin-bottom: 20px;">
-        <a href="{{ url_for('static', filename='files/LN-Guia-Comunidad_y_Colaboradores.pdf') }}" target="_blank">
-            <img src="{{ url_for('static', filename='images/LN-Guia-Comunidad_y_Colaboradores_Portada.jpg') }}" width="100%" class="guide-img">
-        </a>
-    </div>
-</div>
-
     <div class="container">
-        <h2 class="text-center">3 datos sobre nuestro Programa Impulsar</h2>
-        <hr class="hr-center">
-        <br>
-        <div class="video-container">
-            <iframe width="100%" height="400" src="https://www.youtube.com/embed/2h3Z4lL2KR4?si=z25FUCx4UTEtyw-R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+        <div class="container">
+                <h2 class="text-center"> 3 datos sobre nuestro Programa Impulsar </h2>
+                <hr class="hr-center">
+                <br>
+            <div class="video-container">
+                <iframe width="100%" height="400" src="https://www.youtube.com/embed/2h3Z4lL2KR4?si=z25FUCx4UTEtyw-R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+            </div>
         </div>
     </div>
-
-    <div class="container" id="olavarria-video">
-        <h3 class="text-center">Reviví los mejores momentos del taller en Olavarría</h3>
-        <hr class="hr-center">
-        <br>
-        <div class="video-container">
-            <iframe width="100%" height="400" src="{{ url_for('static', filename='images/FinalOlavarría.mp4') }}" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+    <div class="container">
+        <div class="container" id="olavarria-video">
+                <h3 class="text-center"> Reviví los mejores momentos del taller en Olavarría </h3>
+                <hr class="hr-center">
+                <br>
+            <div class="video-container">
+                <iframe width="100%" height="400" src="{{ url_for('static', filename='images/FinalOlavarría.mp4') }}" title="" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+            </div>
         </div>
     </div>
-    {% endblock %}
-
 </div>
+
+{% endblock %}
