@@ -12,61 +12,58 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="{{ url_for('home') }}">Programa Impulsar</a>
+            <a class="navbar-brand" href="{{ url_for('views.home') }}">Programa Impulsar</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                        <a class="nav-link" href="{{ url_for('views.home') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('recursos') }}">Recursos</a>
+                        <a class="nav-link" href="{{ url_for('views.recursos') }}">Recursos</a>
                     </li>
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('user', cuit=current_user.cuit) }}">Resultados</a>
+                        <a class="nav-link" href="{{ url_for('views.user', cuit=current_user.cuit) }}">Resultados</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                        <a class="nav-link" href="{{ url_for('views.logout') }}">Logout</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                        <a class="nav-link" href="{{ url_for('views.login') }}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                        <a class="nav-link" href="{{ url_for('views.register') }}">Register</a>
                     </li>
                     {% endif %}
                 </ul>
             </div>
         </nav>
-    
     </header>
 
     <main role="main">
+        <div class="container mt-4">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </div>
+    </main>
 
-    <div class="container mt-4" >
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        {% block content %}{% endblock %}
-    </div>
+    <footer class="bg-dark" style="margin-top:15px">
+        <div class="container text-center" style="margin-top:30px; margin-bottom: 2px;">
+            <p>Copywrigth Programa Impulsar 2023 - Todos los derechos reservados</p>
+        </div>
+    </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    </main>
 </body>
-<footer class="bg-dark" style="margin-top:15px">
-    <div class="container text-center" style="margin-top:30px margin-bottom 2px;">
-        <p> Copywrigth Programa Impulsar 2023 - Todos los derechos reservados</p>
-    </div>
-</footer>
 </html>
-    
-    

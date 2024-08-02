@@ -1,7 +1,6 @@
-from . import db
-from flask_login import UserMixin
 from datetime import datetime
-
+from flask_login import UserMixin
+from . import db
 
 class User(UserMixin, db.Model):
     cuit = db.Column(db.Integer, primary_key=True)
@@ -12,6 +11,7 @@ class User(UserMixin, db.Model):
     phone = db.Column(db.Integer, nullable=False)
     importance = db.Column(db.Boolean, default=False)
     password = db.Column(db.String(256), nullable=False)
+    is_admin = db.Column(db.Boolean, default=False)  # Añadir este campo
     kpis = db.relationship('KPI', backref='user', lazy=True)
 
     def get_id(self):
@@ -47,4 +47,3 @@ class KPIDescription(db.Model):
 
     def __repr__(self):
         return f'<KPIDescription {self.question_number}-{self.value}>'
-

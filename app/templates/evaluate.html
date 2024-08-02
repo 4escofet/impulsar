@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Evaluación de Auto-evaluación para {{ user.username }}</h1>
-<form method="POST" action="{{ url_for('evaluate', cuit=user.cuit) }}">
+<form method="POST" action="{{ url_for('views.evaluate', cuit=user.cuit) }}">
     {{ form.hidden_tag() }}
     <div class="form-group">
         {{ form.reduc_consumo_electrico.label(class="form-control-label") }}

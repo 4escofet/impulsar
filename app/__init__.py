@@ -16,19 +16,21 @@ class Config:
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
-login_manager.login_view = 'login'
+login_manager.login_view = 'views.login'
 login_manager.login_message_category = 'info'
 
-def create_app(config_class=Config):
+def create_app():
     app = Flask(__name__)
-    app.config.from_object(config_class)
+    app.config.from_object(Config)
     
     db.init_app(app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
     
     with app.app_context():
-        from . import views  # Importar las vistas para registrar las rutas
+        from .views import views as views_blueprint  # Importar el blueprint
+        app.register_blueprint(views_blueprint)
+
         from .models import User
 
         @login_manager.user_loader

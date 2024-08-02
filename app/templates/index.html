@@ -17,12 +17,12 @@
                 <img src="{{ url_for('static', filename='images/LN-cambia-tu-vision-impulsa-el-cambio.png') }}" class="d-block w-100" alt="First slide">
                 <div class="carousel-caption text-left">
                     {% if current_user.is_authenticated %}
-                        <h6>Segui tus indicadores {{ current_user.username }}!</h6>
-                        <p><a class="btn btn-lg btn-primary" href="{{ url_for('user', cuit=current_user.cuit) }}" role="button">KPIs</a></p>
+                        <h6>Seguí tus indicadores {{ current_user.username }}!</h6>
+                        <p><a class="btn btn-lg btn-primary" href="{{ url_for('views.user', cuit=current_user.cuit) }}" role="button">KPIs</a></p>
                     {% else %}
                         <h1>Si todavía no sos parte...¡Sumate!</h1>
                         <p>Transformamos la vida de las personas de manera sostenible</p>
-                        <p><a class="btn btn-lg btn-primary" href="{{ url_for('register') }}" role="button">Registrate</a></p>
+                        <p><a class="btn btn-lg btn-primary" href="{{ url_for('views.register') }}" role="button">Registrate</a></p>
                     {% endif %}
                 </div>
             </div>
@@ -34,11 +34,11 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="{{ url_for('static', filename='images/tallerOlavarria.png') }}" class="d-block w-100" alt="Second slide">
+                <img src="{{ url_for('static', filename='images/tallerOlavarria.png') }}" class="d-block w-100" alt="Third slide">
                 <div class="carousel-caption text-left">
                     <h1> Reviví nuestro taller en Olavarría </h1>
                     <p>Compartimos un taller sobre ESG con nuestras empresas aliadas de la icónica ciudad de Olavarría</p>
-                    <p><a class="btn btn-lg btn-primary" href="{{ url_for('recursos') }}#olavarria-video" role="button">Revivilo acá!</a></p>
+                    <p><a class="btn btn-lg btn-primary" href="{{ url_for('views.recursos') }}#olavarria-video" role="button">Revivilo acá!</a></p>
                 </div>
             </div>
         </div>

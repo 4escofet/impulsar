@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Dashboard de Administración</h1>
+<select id="userFilter" onchange="filterKPIs(this.value)">
+    <option value="all">Todos</option>
+    {% for user in users %}
+        <option value="{{ user.cuit }}">{{ user.organization_name }}</option>
+    {% endfor %}
+</select>
+
+<h2>Consolidación de KPIs</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Pregunta</th>
+            <th>Promedio</th>
+            <th>Descripción</th>
+            <th>Semáforo</th>
+        </tr>
+    </thead>
+    <tbody id="kpiTableBody">
+        {% for question_number, kpi_name in [
+            (1, 'reduc_consumo_electrico'),
+            (2, 'gestion_ambiental'),
+            (3, 'reduc_consumo_agua'),
+            (4, 'reduc_residuos'),
+            (5, 'impacto_ambiental'),
+            (6, 'asp_laborales'),
+            (7, 'div_inc_ddhh'),
+            (8, 'acc_social'),
+            (9, 'ssma'),
+            (10, 'formacion'),
+            (11, 'codigo_conducta'),
+            (12, 'linea_etica'),
+            (13, 'area_compliance'),
+            (14, 'due_dilligence'),
+            (15, 'riesgos'),
+            (16, 'huella_co2')
+        ] %}
+        <tr title="{{ descriptions[question_number][kpi_averages[kpi_name]|round(0, 'floor')] }}">
+            <td>{{ kpi_name.replace('_', ' ').title() }}</td>
+            <td>{{ kpi_averages[kpi_name] }}</td>
+            <td>{{ descriptions[question_number][kpi_averages[kpi_name]|round(0, 'floor')] }}</td>
+            <td>
+                <span class="semaforo" style="background-color: {{ 'darkgreen' if kpi_averages[kpi_name] >= 4 else 'yellow' if kpi_averages[kpi_name] >= 2 else 'red' }};"></span>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Gráfico Consolidado de KPIs</h2>
+<canvas id="kpiChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var ctx = document.getElementById('kpiChart').getContext('2d');
+        var kpiChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Reducción Consumo Eléctrico',
+                    'Gestión Ambiental',
+                    'Reducción Consumo Agua',
+                    'Reducción Residuos',
+                    'Análisis Impactos Ambientales',
+                    'Cumplimiento Aspectos Laborales',
+                    'Gestión Diversidad e Inclusión',
+                    'Acciones Sociales',
+                    'Gestión Salud y Seguridad',
+                    'Gestión Formación',
+                    'Código de Conducta',
+                    'Canal de Denuncias',
+                    'Área de Compliance',
+                    'Debida Diligencia',
+                    'Evaluación de Riesgos',
+                    'Huella de CO2'
+                ],
+                datasets: [
+                    {
+                        label: 'Promedio',
+                        data: [
+                            {{ kpi_averages.reduc_consumo_electrico }},
+                            {{ kpi_averages.gestion_ambiental }},
+                            {{ kpi_averages.reduc_consumo_agua }},
+                            {{ kpi_averages.reduc_residuos }},
+                            {{ kpi_averages.impacto_ambiental }},
+                            {{ kpi_averages.asp_laborales }},
+                            {{ kpi_averages.div_inc_ddhh }},
+                            {{ kpi_averages.acc_social }},
+                            {{ kpi_averages.ssma }},
+                            {{ kpi_averages.formacion }},
+                            {{ kpi_averages.codigo_conducta }},
+                            {{ kpi_averages.linea_etica }},
+                            {{ kpi_averages.area_compliance }},
+                            {{ kpi_averages.due_dilligence }},
+                            {{ kpi_averages.riesgos }},
+                            {{ kpi_averages.huella_co2 }}
+                        ],
+                        backgroundColor: [
+                            '{{ "darkgreen" if kpi_averages.reduc_consumo_electrico >= 4 else "yellow" if kpi_averages.reduc_consumo_electrico >= 2 else "red" }}',
+                            '{{ "darkgreen" if kpi_averages.gestion_ambiental >= 4 else "yellow" if kpi_averages.gestion_ambiental >= 2 else "red" }}',
+                            '{{ "darkgreen" if kpi_averages.reduc_consumo_agua >= 4 else "yellow" if kpi_averages.reduc_consumo_agua >= 2 else "red" }}',
+                            '{{ "darkgreen" if kpi_averages.reduc_residuos >= 4 else "yellow" if kpi_averages.reduc_residuos >= 2 else "red" }}',
+                            '{{ "darkgreen" if kpi_averages.impacto_ambiental >= 4 else "yellow" if kpi_averages.impacto_ambiental >= 2 else "red" }}',
+                            '{{ "darkgreen" if kpi_averages.asp_laborales >= 4 else "yellow" if kpi_averages.asp_laborales >= 2 else "red" }}',
+                            '{{ "darkgreen" if kpi_averages.div_inc_ddhh >= 4 else "yellow" if kpi_averages.div_inc_ddhh >= 2 else "red" }}',
+                            '{{ "darkgreen" if kpi_averages.acc_social >= 4 else "yellow" if kpi_averages.acc_social >= 2 else "red" }}',
+                            '{{ "darkgreen" if kpi_averages.ssma >= 4 else "yellow" if kpi_averages.ssma >= 2 else "red" }}',
+                            '{{ "darkgreen" if kpi_averages.formacion >= 4 else "yellow" if kpi_averages.formacion >= 2 else "red" }}',
+                            '{{ "darkgreen" if kpi_averages.codigo_conducta >= 4 else "yellow" if kpi_averages.codigo_conducta >= 2 else "red" }}',
+                            '{{ "darkgreen" if kpi_averages.linea_etica >= 4 else "yellow" if kpi_averages.linea_etica >= 2 else "red" }}',
+                            '{{ "darkgreen" if kpi_averages.area_compliance >= 4 else "yellow" if kpi_averages.area_compliance >= 2 else "red" }}',
+                            '{{ "darkgreen" if kpi_averages.due_dilligence >= 4 else "yellow" if kpi_averages.due_dilligence >= 2 else "red" }}',
+                            '{{ "darkgreen" if kpi_averages.riesgos >= 4 else "yellow" if kpi_averages.riesgos >= 2 else "red" }}',
+                            '{{ "darkgreen" if kpi_averages.huella_co2 >= 4 else "yellow" if kpi_averages.huella_co2 >= 2 else "red" }}'
+                        ],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Filtro de KPIs por usuario
+        window.filterKPIs = function(cuit) {
+            fetch('/api/kpis/' + cuit)
+                .then(response => response.json())
+                .then(data => {
+                    var kpiTableBody = document.getElementById('kpiTableBody');
+                    kpiTableBody.innerHTML = '';
+                    data.kpis.forEach(kpi => {
+                        var row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${kpi.question}</td>
+                            <td>${kpi.value}</td>
+                            <td>${kpi.description}</td>
+                            <td><span class="semaforo" style="background-color: ${kpi.color};"></span></td>
+                        `;
+                        kpiTableBody.appendChild(row);
+                    });
+
+                    kpiChart.data.datasets[0].data = data.kpis.map(kpi => kpi.value);
+                    kpiChart.update();
+                });
+        }
+    });
+
+    // Filtro de lista de usuarios
+    document.getElementById('userFilter').addEventListener('keyup', function() {
+        var filter = this.value.toLowerCase();
+        var userList = document.getElementById('userList');
+        var users = userList.getElementsByTagName('option');
+
+        for (var i = 0; i < users.length; i++) {
+            var user = users[i].textContent || users[i].innerText;
+            if (user.toLowerCase().indexOf(filter) > -1) {
+                users[i].style.display = "";
+            } else {
+                users[i].style.display = "none";
+            }
+        }
+    });
+</script>
+<style>
+    .semaforo {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+    }
+</style>
+{% endblock %}
