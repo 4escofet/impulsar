@@ -6,6 +6,7 @@ from . import db, bcrypt
 from .models import User, KPI, KPIDescription
 from .forms import RegistrationForm, LoginForm, EvaluationForm
 from flask import Blueprint
+from sqlalchemy import text  
 
 # Definir el blueprint para las vistas
 views = Blueprint('views', __name__)
@@ -113,7 +114,22 @@ def evaluate(cuit):
 def admin_dashboard():
     if not current_user.is_admin:
         return redirect(url_for('views.home'))
-    users = User.query.filter_by(is_admin=False).all()
+    try:
+        print("Antes de la consulta de usuarios")
+        query = text("SELECT cuit, organization_name FROM user WHERE is_admin = 0")
+        print(f"Query ejecutada: {query}")
+        result = db.session.execute(query)
+        users = result.fetchall()
+        print(f"Usuarios obtenidos: {users}")
+        
+        # Convertir los resultados en una lista de diccionarios para facilitar su uso
+        users = [{"cuit": row[0], "organization_name": row[1]} for row in users]
+        print(f"Lista de usuarios: {users}")
+
+    except Exception as e:
+        print(f"Error al obtener usuarios: {str(e)}")
+        users = []
+        
     kpi_averages = {
         'reduc_consumo_electrico': round(db.session.query(db.func.avg(KPI.reduc_consumo_electrico)).scalar(), 2),
         'gestion_ambiental': round(db.session.query(db.func.avg(KPI.gestion_ambiental)).scalar(), 2),
