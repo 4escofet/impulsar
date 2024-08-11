@@ -59,7 +59,6 @@ def login():
     return render_template('login.html', form=form)
 
 
-
 @views.route('/logout')
 def logout():
     logout_user()
@@ -129,7 +128,7 @@ def admin_dashboard():
     except Exception as e:
         print(f"Error al obtener usuarios: {str(e)}")
         users = []
-        
+
     kpi_averages = {
         'reduc_consumo_electrico': round(db.session.query(db.func.avg(KPI.reduc_consumo_electrico)).scalar(), 2),
         'gestion_ambiental': round(db.session.query(db.func.avg(KPI.gestion_ambiental)).scalar(), 2),
@@ -148,6 +147,7 @@ def admin_dashboard():
         'riesgos': round(db.session.query(db.func.avg(KPI.riesgos)).scalar(), 2),
         'huella_co2': round(db.session.query(db.func.avg(KPI.huella_co2)).scalar(), 2)
     }
+
     descriptions = {desc.question_number: {} for desc in KPIDescription.query.all()}
     for desc in KPIDescription.query.all():
         descriptions[desc.question_number][desc.value] = desc.description
@@ -163,6 +163,18 @@ def recursos():
 def get_kpis(cuit):
     if not current_user.is_admin:
         return jsonify({'error': 'Access Denied'}), 403
+
+    descriptions = {desc.question_number: {} for desc in KPIDescription.query.all()}
+    for desc in KPIDescription.query.all():
+        descriptions[desc.question_number][desc.value] = desc.description
+
+    def get_color(value):
+        if value >= 4:
+            return "darkgreen"
+        elif value >= 2:
+            return "yellow"
+        else:
+            return "red"
 
     if cuit == 'all':
         kpis = db.session.query(
@@ -183,58 +195,60 @@ def get_kpis(cuit):
             db.func.avg(KPI.riesgos).label('riesgos'),
             db.func.avg(KPI.huella_co2).label('huella_co2')
         ).one()
+
         kpis = [
-            {'question': 'Reducción Consumo Eléctrico', 'value': kpis.reduc_consumo_electrico},
-            {'question': 'Gestión Ambiental', 'value': kpis.gestion_ambiental},
-            {'question': 'Reducción Consumo Agua', 'value': kpis.reduc_consumo_agua},
-            {'question': 'Reducción Residuos', 'value': kpis.reduc_residuos},
-            {'question': 'Análisis Impactos Ambientales', 'value': kpis.impacto_ambiental},
-            {'question': 'Cumplimiento Aspectos Laborales', 'value': kpis.asp_laborales},
-            {'question': 'Gestión Diversidad e Inclusión', 'value': kpis.div_inc_ddhh},
-            {'question': 'Acciones Sociales', 'value': kpis.acc_social},
-            {'question': 'Gestión Salud y Seguridad', 'value': kpis.ssma},
-            {'question': 'Gestión Formación', 'value': kpis.formacion},
-            {'question': 'Código de Conducta', 'value': kpis.codigo_conducta},
-            {'question': 'Canal de Denuncias', 'value': kpis.linea_etica},
-            {'question': 'Área de Compliance', 'value': kpis.area_compliance},
-            {'question': 'Debida Diligencia', 'value': kpis.due_dilligence},
-            {'question': 'Evaluación de Riesgos', 'value': kpis.riesgos},
-            {'question': 'Huella de CO2', 'value': kpis.huella_co2}
+            {'question': 'Reducción Consumo Eléctrico', 'value': kpis.reduc_consumo_electrico, 'description': descriptions[1][round(kpis.reduc_consumo_electrico, 0)], 'color': get_color(kpis.reduc_consumo_electrico)},
+            {'question': 'Gestión Ambiental', 'value': kpis.gestion_ambiental, 'description': descriptions[2][round(kpis.gestion_ambiental, 0)], 'color': get_color(kpis.gestion_ambiental)},
+            {'question': 'Reducción Consumo Agua', 'value': kpis.reduc_consumo_agua, 'description': descriptions[3][round(kpis.reduc_consumo_agua, 0)], 'color': get_color(kpis.reduc_consumo_agua)},
+            {'question': 'Reducción Residuos', 'value': kpis.reduc_residuos, 'description': descriptions[4][round(kpis.reduc_residuos, 0)], 'color': get_color(kpis.reduc_residuos)},
+            {'question': 'Análisis Impactos Ambientales', 'value': kpis.impacto_ambiental, 'description': descriptions[5][round(kpis.impacto_ambiental, 0)], 'color': get_color(kpis.impacto_ambiental)},
+            {'question': 'Cumplimiento Aspectos Laborales', 'value': kpis.asp_laborales, 'description': descriptions[6][round(kpis.asp_laborales, 0)], 'color': get_color(kpis.asp_laborales)},
+            {'question': 'Gestión Diversidad e Inclusión', 'value': kpis.div_inc_ddhh, 'description': descriptions[7][round(kpis.div_inc_ddhh, 0)], 'color': get_color(kpis.div_inc_ddhh)},
+            {'question': 'Acciones Sociales', 'value': kpis.acc_social, 'description': descriptions[8][round(kpis.acc_social, 0)], 'color': get_color(kpis.acc_social)},
+            {'question': 'Gestión Salud y Seguridad', 'value': kpis.ssma, 'description': descriptions[9][round(kpis.ssma, 0)], 'color': get_color(kpis.ssma)},
+            {'question': 'Gestión Formación', 'value': kpis.formacion, 'description': descriptions[10][round(kpis.formacion, 0)], 'color': get_color(kpis.formacion)},
+            {'question': 'Código de Conducta', 'value': kpis.codigo_conducta, 'description': descriptions[11][round(kpis.codigo_conducta, 0)], 'color': get_color(kpis.codigo_conducta)},
+            {'question': 'Canal de Denuncias', 'value': kpis.linea_etica, 'description': descriptions[12][round(kpis.linea_etica, 0)], 'color': get_color(kpis.linea_etica)},
+            {'question': 'Área de Compliance', 'value': kpis.area_compliance, 'description': descriptions[13][round(kpis.area_compliance, 0)], 'color': get_color(kpis.area_compliance)},
+            {'question': 'Debida Diligencia', 'value': kpis.due_dilligence, 'description': descriptions[14][round(kpis.due_dilligence, 0)], 'color': get_color(kpis.due_dilligence)},
+            {'question': 'Evaluación de Riesgos', 'value': kpis.riesgos, 'description': descriptions[15][round(kpis.riesgos, 0)], 'color': get_color(kpis.riesgos)},
+            {'question': 'Huella de CO2', 'value': kpis.huella_co2, 'description': descriptions[16][round(kpis.huella_co2, 0)], 'color': get_color(kpis.huella_co2)}
         ]
     else:
         kpis = KPI.query.filter_by(cuit=cuit).all()
         kpis = [
-            {'question': 'Reducción Consumo Eléctrico', 'value': kpi.reduc_consumo_electrico} for kpi in kpis
+            {'question': 'Reducción Consumo Eléctrico', 'value': kpi.reduc_consumo_electrico, 'description': descriptions[1][round(kpi.reduc_consumo_electrico, 0)], 'color': get_color(kpi.reduc_consumo_electrico)} for kpi in kpis
         ] + [
-            {'question': 'Gestión Ambiental', 'value': kpi.gestion_ambiental} for kpi in kpis
+            {'question': 'Gestión Ambiental', 'value': kpi.gestion_ambiental, 'description': descriptions[2][round(kpi.gestion_ambiental, 0)], 'color': get_color(kpi.gestion_ambiental)} for kpi in kpis
         ] + [
-            {'question': 'Reducción Consumo Agua', 'value': kpi.reduc_consumo_agua} for kpi in kpis
+            {'question': 'Reducción Consumo Agua', 'value': kpi.reduc_consumo_agua, 'description': descriptions[3][round(kpi.reduc_consumo_agua, 0)], 'color': get_color(kpi.reduc_consumo_agua)} for kpi in kpis
         ] + [
-            {'question': 'Reducción Residuos', 'value': kpi.reduc_residuos} for kpi in kpis
+            {'question': 'Reducción Residuos', 'value': kpi.reduc_residuos, 'description': descriptions[4][round(kpi.reduc_residuos, 0)], 'color': get_color(kpi.reduc_residuos)} for kpi in kpis
         ] + [
-            {'question': 'Análisis Impactos Ambientales', 'value': kpi.impacto_ambiental} for kpi in kpis
+            {'question': 'Análisis Impactos Ambientales', 'value': kpi.impacto_ambiental, 'description': descriptions[5][round(kpi.impacto_ambiental, 0)], 'color': get_color(kpi.impacto_ambiental)} for kpi in kpis
         ] + [
-            {'question': 'Cumplimiento Aspectos Laborales', 'value': kpi.asp_laborales} for kpi in kpis
+            {'question': 'Cumplimiento Aspectos Laborales', 'value': kpi.asp_laborales, 'description': descriptions[6][round(kpi.asp_laborales, 0)], 'color': get_color(kpi.asp_laborales)} for kpi in kpis
         ] + [
-            {'question': 'Gestión Diversidad e Inclusión', 'value': kpi.div_inc_ddhh} for kpi in kpis
+            {'question': 'Gestión Diversidad e Inclusión', 'value': kpi.div_inc_ddhh, 'description': descriptions[7][round(kpi.div_inc_ddhh, 0)], 'color': get_color(kpi.div_inc_ddhh)} for kpi in kpis
         ] + [
-            {'question': 'Acciones Sociales', 'value': kpi.acc_social} for kpi in kpis
+            {'question': 'Acciones Sociales', 'value': kpi.acc_social, 'description': descriptions[8][round(kpi.acc_social, 0)], 'color': get_color(kpi.acc_social)} for kpi in kpis
         ] + [
-            {'question': 'Gestión Salud y Seguridad', 'value': kpi.ssma} for kpi in kpis
+            {'question': 'Gestión Salud y Seguridad', 'value': kpi.ssma, 'description': descriptions[9][round(kpi.ssma, 0)], 'color': get_color(kpi.ssma)} for kpi in kpis
         ] + [
-            {'question': 'Gestión Formación', 'value': kpi.formacion} for kpi in kpis
+            {'question': 'Gestión Formación', 'value': kpi.formacion, 'description': descriptions[10][round(kpi.formacion, 0)], 'color': get_color(kpi.formacion)} for kpi in kpis
         ] + [
-            {'question': 'Código de Conducta', 'value': kpi.codigo_conducta} for kpi in kpis
+            {'question': 'Código de Conducta', 'value': kpi.codigo_conducta, 'description': descriptions[11][round(kpi.codigo_conducta, 0)], 'color': get_color(kpi.codigo_conducta)} for kpi in kpis
         ] + [
-            {'question': 'Canal de Denuncias', 'value': kpi.linea_etica} for kpi in kpis
+            {'question': 'Canal de Denuncias', 'value': kpi.linea_etica, 'description': descriptions[12][round(kpi.linea_etica, 0)], 'color': get_color(kpi.linea_etica)} for kpi in kpis
         ] + [
-            {'question': 'Área de Compliance', 'value': kpi.area_compliance} for kpi in kpis
+            {'question': 'Área de Compliance', 'value': kpi.area_compliance, 'description': descriptions[13][round(kpi.area_compliance, 0)], 'color': get_color(kpi.area_compliance)} for kpi in kpis
         ] + [
-            {'question': 'Debida Diligencia', 'value': kpi.due_dilligence} for kpi in kpis
+            {'question': 'Debida Diligencia', 'value': kpi.due_dilligence, 'description': descriptions[14][round(kpi.due_dilligence, 0)], 'color': get_color(kpi.due_dilligence)} for kpi in kpis
         ] + [
-            {'question': 'Evaluación de Riesgos', 'value': kpi.riesgos} for kpi in kpis
+            {'question': 'Evaluación de Riesgos', 'value': kpi.riesgos, 'description': descriptions[15][round(kpi.riesgos, 0)], 'color': get_color(kpi.riesgos)} for kpi in kpis
         ] + [
-            {'question': 'Huella de CO2', 'value': kpi.huella_co2} for kpi in kpis
+            {'question': 'Huella de CO2', 'value': kpi.huella_co2, 'description': descriptions[16][round(kpi.huella_co2, 0)], 'color': get_color(kpi.huella_co2)} for kpi in kpis
         ]
 
     return jsonify({'kpis': kpis})
+
