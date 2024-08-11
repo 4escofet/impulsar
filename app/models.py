@@ -11,7 +11,7 @@ class User(UserMixin, db.Model):
     phone = db.Column(db.Integer, nullable=False)
     importance = db.Column(db.Boolean, default=False)
     password = db.Column(db.String(256), nullable=False)
-    is_admin = db.Column(db.Boolean, default=False)  # Añadir este campo
+    is_admin = db.Column(db.Boolean, default=False)  
     kpis = db.relationship('KPI', backref='user', lazy=True)
 
     def get_id(self):
