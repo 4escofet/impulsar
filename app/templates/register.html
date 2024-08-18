@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Register</h1>
-<form method="POST" action="{{ url_for('register') }}">
+<form method="POST" action="{{ url_for('views.register') }}"> 
     {{ form.hidden_tag() }}
     <div class="form-group">
         {{ form.organization_name.label(class="form-control-label") }}
