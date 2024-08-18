@@ -4,7 +4,8 @@ from . import db, bcrypt
 from .models import User, KPI, KPIDescription
 from .forms import RegistrationForm, LoginForm, EvaluationForm
 from flask import Blueprint
-from sqlalchemy import text  
+from sqlalchemy import text
+from datetime import datetime
 
 # Definir el blueprint para las vistas
 views = Blueprint('views', __name__)
