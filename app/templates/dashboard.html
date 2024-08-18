@@ -136,25 +136,29 @@
 
         // Filtro de KPIs por usuario
         window.filterKPIs = function(cuit) {
-            fetch('/api/kpis/user/latest/' + cuit)
-                .then(response => response.json())
-                .then(data => {
-                    var kpiTableBody = document.getElementById('kpiTableBody');
-                    kpiTableBody.innerHTML = '';
-                    data.kpis.forEach(kpi => {
-                        var row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${kpi.question}</td>
-                            <td>${kpi.value}</td>
-                            <td>${kpi.description}</td>
-                            <td><span class="semaforo" style="background-color: ${kpi.color};"></span></td>
-                        `;
-                        kpiTableBody.appendChild(row);
-                    });
+            if (cuit === "all") {
+                location.reload();  // Recargar la página si se selecciona "Todos"
+            } else {
+                fetch('/api/kpis/user/latest/' + cuit)
+                    .then(response => response.json())
+                    .then(data => {
+                        var kpiTableBody = document.getElementById('kpiTableBody');
+                        kpiTableBody.innerHTML = '';
+                        data.kpis.forEach(kpi => {
+                            var row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${kpi.question}</td>
+                                <td>${kpi.value}</td>
+                                <td>${kpi.description}</td>
+                                <td><span class="semaforo" style="background-color: ${kpi.color};"></span></td>
+                            `;
+                            kpiTableBody.appendChild(row);
+                        });
 
-                    kpiChart.data.datasets[0].data = data.kpis.map(kpi => kpi.value);
-                    kpiChart.update();
-                });
+                        kpiChart.data.datasets[0].data = data.kpis.map(kpi => kpi.value);
+                        kpiChart.update();
+                    });
+            }
         }
     });
 </script>
@@ -167,5 +171,3 @@
     }
 </style>
 {% endblock %}
-
-

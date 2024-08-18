@@ -265,7 +265,8 @@ def get_admin_latest_kpis():
     for desc in KPIDescription.query.all():
         descriptions[desc.question_number][desc.value] = desc.description
 
-    users = User.query.all()  # Obtener todos los usuarios para el selector
+    # Filtrar usuarios excluyendo a los administradores
+    users = User.query.filter_by(is_admin=False).all()
 
     def get_color(value):
         if value >= 4:
