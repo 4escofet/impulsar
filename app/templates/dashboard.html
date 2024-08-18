@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 {% block content %}
 <h1>Dashboard de Administración</h1>
 <select id="userFilter" onchange="filterKPIs(this.value)">
@@ -136,7 +136,7 @@
 
         // Filtro de KPIs por usuario
         window.filterKPIs = function(cuit) {
-            fetch('/api/kpis/' + cuit)
+            fetch('/api/kpis/user/latest/' + cuit)
                 .then(response => response.json())
                 .then(data => {
                     var kpiTableBody = document.getElementById('kpiTableBody');
@@ -157,22 +157,6 @@
                 });
         }
     });
-
-    // Filtro de lista de usuarios
-    document.getElementById('userFilter').addEventListener('keyup', function() {
-        var filter = this.value.toLowerCase();
-        var userList = document.getElementById('userList');
-        var users = userList.getElementsByTagName('option');
-
-        for (var i = 0; i < users.length; i++) {
-            var user = users[i].textContent || users[i].innerText;
-            if (user.toLowerCase().indexOf(filter) > -1) {
-                users[i].style.display = "";
-            } else {
-                users[i].style.display = "none";
-            }
-        }
-    });
 </script>
 <style>
     .semaforo {
@@ -183,3 +167,5 @@
     }
 </style>
 {% endblock %}
+
+

@@ -11,94 +11,142 @@
     <thead>
         <tr>
             <th>Pregunta</th>
-            <th>Puntaje</th>
+            <th>Valor</th>
             <th>Descripción</th>
+            <th>Semáforo</th>
         </tr>
     </thead>
-    <tbody>
-        {% for kpi in kpis %}
+    <tbody id="kpiTableBody">
+        {% for question_number, kpi_name in [
+            (1, 'reduc_consumo_electrico'),
+            (2, 'gestion_ambiental'),
+            (3, 'reduc_consumo_agua'),
+            (4, 'reduc_residuos'),
+            (5, 'impacto_ambiental'),
+            (6, 'asp_laborales'),
+            (7, 'div_inc_ddhh'),
+            (8, 'acc_social'),
+            (9, 'ssma'),
+            (10, 'formacion'),
+            (11, 'codigo_conducta'),
+            (12, 'linea_etica'),
+            (13, 'area_compliance'),
+            (14, 'due_dilligence'),
+            (15, 'riesgos'),
+            (16, 'huella_co2')
+        ] %}
+        {% if loop.index0 < kpis|length %}
         <tr>
-            <td>Reducción Consumo Eléctrico</td>
-            <td>{{ kpi.reduc_consumo_electrico }}</td>
-            <td>{{ descriptions[1][kpi.reduc_consumo_electrico] }}</td>
+            <td>{{ kpi_name.replace('_', ' ').title() }}</td>
+            <td>{{ kpis[loop.index0]['value'] }}</td>
+            <td>{{ kpis[loop.index0]['description'] }}</td>
+            <td>
+                <span class="semaforo" style="background-color: {{ kpis[loop.index0]['color'] }};"></span>
+            </td>
         </tr>
+        {% else %}
         <tr>
-            <td>Gestión Ambiental</td>
-            <td>{{ kpi.gestion_ambiental }}</td>
-            <td>{{ descriptions[2][kpi.gestion_ambiental] }}</td>
+            <td>{{ kpi_name.replace('_', ' ').title() }}</td>
+            <td colspan="3">Sin datos disponibles</td>
         </tr>
-        <tr>
-            <td>Reducción Consumo Agua</td>
-            <td>{{ kpi.reduc_consumo_agua }}</td>
-            <td>{{ descriptions[3][kpi.reduc_consumo_agua] }}</td>
-        </tr>
-        <tr>
-            <td>Reducción Residuos</td>
-            <td>{{ kpi.reduc_residuos }}</td>
-            <td>{{ descriptions[4][kpi.reduc_residuos] }}</td>
-        </tr>
-        <tr>
-            <td>Análisis Impactos Ambientales</td>
-            <td>{{ kpi.impacto_ambiental }}</td>
-            <td>{{ descriptions[5][kpi.impacto_ambiental] }}</td>
-        </tr>
-        <tr>
-            <td>Cumplimiento Aspectos Laborales</td>
-            <td>{{ kpi.asp_laborales }}</td>
-            <td>{{ descriptions[6][kpi.asp_laborales] }}</td>
-        </tr>
-        <tr>
-            <td>Gestión Diversidad e Inclusión</td>
-            <td>{{ kpi.div_inc_ddhh }}</td>
-            <td>{{ descriptions[7][kpi.div_inc_ddhh] }}</td>
-        </tr>
-        <tr>
-            <td>Acciones Sociales</td>
-            <td>{{ kpi.acc_social }}</td>
-            <td>{{ descriptions[8][kpi.acc_social] }}</td>
-        </tr>
-        <tr>
-            <td>Gestión Salud y Seguridad</td>
-            <td>{{ kpi.ssma }}</td>
-            <td>{{ descriptions[9][kpi.ssma] }}</td>
-        </tr>
-        <tr>
-            <td>Gestión Formación</td>
-            <td>{{ kpi.formacion }}</td>
-            <td>{{ descriptions[10][kpi.formacion] }}</td>
-        </tr>
-        <tr>
-            <td>Código de Conducta</td>
-            <td>{{ kpi.codigo_conducta }}</td>
-            <td>{{ descriptions[11][kpi.codigo_conducta] }}</td>
-        </tr>
-        <tr>
-            <td>Canal de Denuncias</td>
-            <td>{{ kpi.linea_etica }}</td>
-            <td>{{ descriptions[12][kpi.linea_etica] }}</td>
-        </tr>
-        <tr>
-            <td>Área de Compliance</td>
-            <td>{{ kpi.area_compliance }}</td>
-            <td>{{ descriptions[13][kpi.area_compliance] }}</td>
-        </tr>
-        <tr>
-            <td>Debida Diligencia</td>
-            <td>{{ kpi.due_dilligence }}</td>
-            <td>{{ descriptions[14][kpi.due_dilligence] }}</td>
-        </tr>
-        <tr>
-            <td>Evaluación de Riesgos</td>
-            <td>{{ kpi.riesgos }}</td>
-            <td>{{ descriptions[15][kpi.riesgos] }}</td>
-        </tr>
-        <tr>
-            <td>Huella de CO2</td>
-            <td>{{ kpi.huella_co2 }}</td>
-            <td>{{ descriptions[16][kpi.huella_co2] }}</td>
-        </tr>
+        {% endif %}
         {% endfor %}
     </tbody>
 </table>
-<a href="{{ url_for('views.evaluate', cuit=user.cuit) }}" class="btn btn-primary">Cargar tus primeros KPIs</a>
+
+<h2>Gráfico de KPIs</h2>
+<canvas id="kpiChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var ctx = document.getElementById('kpiChart').getContext('2d');
+        var kpiChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Reducción Consumo Eléctrico',
+                    'Gestión Ambiental',
+                    'Reducción Consumo Agua',
+                    'Reducción Residuos',
+                    'Análisis Impactos Ambientales',
+                    'Cumplimiento Aspectos Laborales',
+                    'Gestión Diversidad e Inclusión',
+                    'Acciones Sociales',
+                    'Gestión Salud y Seguridad',
+                    'Gestión Formación',
+                    'Código de Conducta',
+                    'Canal de Denuncias',
+                    'Área de Compliance',
+                    'Debida Diligencia',
+                    'Evaluación de Riesgos',
+                    'Huella de CO2'
+                ],
+                datasets: [
+                    {
+                        label: 'Valor',
+                        data: [
+                            {{ kpis[0]['value'] if kpis|length > 0 else 0 }},
+                            {{ kpis[1]['value'] if kpis|length > 1 else 0 }},
+                            {{ kpis[2]['value'] if kpis|length > 2 else 0 }},
+                            {{ kpis[3]['value'] if kpis|length > 3 else 0 }},
+                            {{ kpis[4]['value'] if kpis|length > 4 else 0 }},
+                            {{ kpis[5]['value'] if kpis|length > 5 else 0 }},
+                            {{ kpis[6]['value'] if kpis|length > 6 else 0 }},
+                            {{ kpis[7]['value'] if kpis|length > 7 else 0 }},
+                            {{ kpis[8]['value'] if kpis|length > 8 else 0 }},
+                            {{ kpis[9]['value'] if kpis|length > 9 else 0 }},
+                            {{ kpis[10]['value'] if kpis|length > 10 else 0 }},
+                            {{ kpis[11]['value'] if kpis|length > 11 else 0 }},
+                            {{ kpis[12]['value'] if kpis|length > 12 else 0 }},
+                            {{ kpis[13]['value'] if kpis|length > 13 else 0 }},
+                            {{ kpis[14]['value'] if kpis|length > 14 else 0 }},
+                            {{ kpis[15]['value'] if kpis|length > 15 else 0 }}
+                        ],
+                        backgroundColor: [
+                            '{{ kpis[0]['color'] if kpis|length > 0 else "gray" }}',
+                            '{{ kpis[1]['color'] if kpis|length > 1 else "gray" }}',
+                            '{{ kpis[2]['color'] if kpis|length > 2 else "gray" }}',
+                            '{{ kpis[3]['color'] if kpis|length > 3 else "gray" }}',
+                            '{{ kpis[4]['color'] if kpis|length > 4 else "gray" }}',
+                            '{{ kpis[5]['color'] if kpis|length > 5 else "gray" }}',
+                            '{{ kpis[6]['color'] if kpis|length > 6 else "gray" }}',
+                            '{{ kpis[7]['color'] if kpis|length > 7 else "gray" }}',
+                            '{{ kpis[8]['color'] if kpis|length > 8 else "gray" }}',
+                            '{{ kpis[9]['color'] if kpis|length > 9 else "gray" }}',
+                            '{{ kpis[10]['color'] if kpis|length > 10 else "gray" }}',
+                            '{{ kpis[11]['color'] if kpis|length > 11 else "gray" }}',
+                            '{{ kpis[12]['color'] if kpis|length > 12 else "gray" }}',
+                            '{{ kpis[13]['color'] if kpis|length > 13 else "gray" }}',
+                            '{{ kpis[14]['color'] if kpis|length > 14 else "gray" }}',
+                            '{{ kpis[15]['color'] if kpis|length > 15 else "gray" }}'
+                        ],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+<style>
+    .semaforo {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+    }
+</style>
 {% endblock %}
+
